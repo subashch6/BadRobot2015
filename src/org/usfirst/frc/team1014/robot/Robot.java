@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		
     	CommandBase.init();
+    	
         // instantiate the command used for the autonomous period
     }
 	
@@ -54,8 +55,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-
+    		
         Scheduler.getInstance().add(new MikeDriveGroup());
+        LiveWindow.setEnabled(true);
     }
 
     /**
@@ -71,6 +73,14 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        LiveWindow.run();
+    }
+    /**
+     * this function is called when test is being initialized
+     */
+    public void testInit()
+    {
+    	LiveWindow.setEnabled(true);
     }
     
     /**

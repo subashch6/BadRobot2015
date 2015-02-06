@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 
 public class MikeDriveTrain extends BadSubsystem {
 	private static MikeDriveTrain instance;
@@ -42,6 +44,10 @@ public class MikeDriveTrain extends BadSubsystem {
     	
     	train.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true); 
     	train.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+    	LiveWindow.addActuator("frontLeft", RobotMap.frontLeftController, (LiveWindowSendable) frontLeft);
+    	LiveWindow.addActuator("backLeft", RobotMap.backLeftController, (LiveWindowSendable) backLeft);
+    	LiveWindow.addActuator("frontRight", RobotMap.frontRightController, (LiveWindowSendable) frontRight);
+    	LiveWindow.addActuator("backRight", RobotMap.backRightController, (LiveWindowSendable) backRight);
 	}
 
 	@Override
