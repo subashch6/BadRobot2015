@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 
 public class MikeDriveTrain extends BadSubsystem {
 	private static MikeDriveTrain instance;
@@ -42,12 +40,9 @@ public class MikeDriveTrain extends BadSubsystem {
 
     	train = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
     	
-    	train.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true); 
-    	train.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-    	LiveWindow.addActuator("frontLeft", RobotMap.frontLeftController, (LiveWindowSendable) frontLeft);
-    	LiveWindow.addActuator("backLeft", RobotMap.backLeftController, (LiveWindowSendable) backLeft);
-    	LiveWindow.addActuator("frontRight", RobotMap.frontRightController, (LiveWindowSendable) frontRight);
-    	LiveWindow.addActuator("backRight", RobotMap.backRightController, (LiveWindowSendable) backRight);
+    	train.setInvertedMotor(RobotDrive.MotorType.kRearRight, true); 
+    	train.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+    	
 	}
 
 	@Override
@@ -92,7 +87,6 @@ public class MikeDriveTrain extends BadSubsystem {
      * @param fr
      * @param br
      */
-
     public void setMotors(double fl, double bl, double fr, double br)
     {
     	frontLeft.set(fl);
@@ -200,8 +194,6 @@ public class MikeDriveTrain extends BadSubsystem {
     	}
     	else
     	{
-    		so(angleDifference);
-    		so(angleDifference/90 + "\n");
     		return clampMotorValues(Math.abs(angleDifference/90));
     	}
     }
@@ -266,7 +258,7 @@ public class MikeDriveTrain extends BadSubsystem {
     		}
     		return false;
     	}
-    	if(Math.abs(pitchAmount) > 18)
+    	if(Math.abs(pitchAmount) > 15)
     	{
     		if(startPitch - pitch > 0) // pitching back
     		{
@@ -293,6 +285,10 @@ public class MikeDriveTrain extends BadSubsystem {
      */
 	public static void so(Object so)
 	{
-		System.out.println("MikeDriveTainr: " + so);
+		System.out.println("MikeDriveTrain: " + so);
 	}
 }
+
+
+
+
