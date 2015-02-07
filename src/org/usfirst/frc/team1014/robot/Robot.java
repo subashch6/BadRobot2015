@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team1014.robot.commands.CommandBase;
 import org.usfirst.frc.team1014.robot.commands.MikeDriveGroup;
 import org.usfirst.frc.team1014.robot.commands.autonomous.AutoTurn;
-import org.usfirst.frc.team1014.robot.commands.autonomous.DriveSquare;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
 
 /**
@@ -19,6 +18,7 @@ import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		
     	CommandBase.init();
+    	LiveWindow.setEnabled(true);
         // instantiate the command used for the autonomous period
     }
 	
@@ -42,7 +43,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	Scheduler.getInstance().add(new DriveSquare());
+    	Scheduler.getInstance().add(new AutoTurn(10));
     }
 
     /**
@@ -57,7 +58,6 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-
         Scheduler.getInstance().add(new MikeDriveGroup());
     }
 
@@ -73,9 +73,15 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
         Scheduler.getInstance().run();
+        LiveWindow.run();
+     
     }
-    
+    public void testInit()
+    {
+    	LiveWindow.setEnabled(true);
+    }
     /**
      * This function is called periodically during test mode
      */
