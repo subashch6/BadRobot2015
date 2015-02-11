@@ -4,13 +4,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1014.robot.commands.CommandBase;
 import org.usfirst.frc.team1014.robot.commands.MikeDriveGroup;
 import org.usfirst.frc.team1014.robot.commands.autonomous.AutoTurn;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveSquare;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
+import org.usfirst.frc.team1014.smartdashboard.Dashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,17 +25,21 @@ import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-
     Command teleCommand;
     SendableChooser autoChooser;
+    NetworkTable table = NetworkTable.getTable("SmartDashboard");
 
-    /**
+    /**	
      * This function is run when the robot is first started up and should be
       * used for any initialization code.
      */
     public void robotInit() {
 		
     	CommandBase.init();
+    	SmartDashboard.putData(Scheduler.getInstance());
+    	table.putNumber("power",.2);
+    	table.putNumber("straight", 1.0);
+    	Dashboard.update(autoChooser);
         // instantiate the command used for the autonomous period
     }
 	
@@ -42,7 +49,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	Scheduler.getInstance().add(new DriveSquare(.5, .2, 90));
+    	Scheduler.getInstance().add(new DriveStraightForward(table.getNumber("straight"), table.getNumber("power")));
     }
 
     /**
@@ -51,7 +58,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
-
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 

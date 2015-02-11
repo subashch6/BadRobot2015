@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MikeDriveTrain extends BadSubsystem {
 	private static MikeDriveTrain instance;
@@ -37,7 +38,11 @@ public class MikeDriveTrain extends BadSubsystem {
         backLeft = new Talon(RobotMap.backLeftController);
         frontRight = new Talon(RobotMap.frontRightController);
         backRight = new Talon(RobotMap.backRightController); 
-
+        SmartDashboard.putNumber("frontLeft", frontLeft.get());
+        SmartDashboard.putNumber("backLeft", backLeft.get());
+        SmartDashboard.putNumber("frontRight", frontRight.get());
+        SmartDashboard.putNumber("backRight", backRight.get());
+        
     	train = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
     	
     	train.setInvertedMotor(RobotDrive.MotorType.kRearRight, true); 

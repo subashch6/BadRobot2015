@@ -4,6 +4,7 @@ import org.usfirst.frc.team1014.robot.subsystems.IMU.IMU;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Nav6MXP extends BadSubsystem {
 
@@ -33,7 +34,6 @@ public class Nav6MXP extends BadSubsystem {
 		imu = new IMU(serial_port,update_rate_hz);
         Timer.delay(0.3);
         imu.zeroYaw();
-	
 
 	}
 

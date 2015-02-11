@@ -1,11 +1,14 @@
 package org.usfirst.frc.team1014.robot.subsystems;
 
 import org.usfirst.frc.team1014.robot.RobotMap;
+import org.usfirst.frc.team1014.robot.commands.CommandBase;
 import org.usfirst.frc.team1014.robot.commands.Grab;
 import org.usfirst.frc.team1014.robot.commands.SafeMecanumDriveField;
 
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Grabber extends BadSubsystem {
 	
@@ -36,6 +39,9 @@ public class Grabber extends BadSubsystem {
 		lift2.set(0);
 		lift3 = new Talon(RobotMap.lift3);
 		lift3.set(0);
+		SmartDashboard.putNumber("lift1", lift1.get());
+		SmartDashboard.putNumber("lift2", lift2.get());
+		SmartDashboard.putNumber("lift3", lift3.get());
 		
 	}
 
