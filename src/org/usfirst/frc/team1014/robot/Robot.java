@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putData(Scheduler.getInstance());
     	table.putNumber("power",.2);
     	table.putNumber("straight", 1.0);
-    	Dashboard.update(autoChooser);
+    	//Dashboard.update(autoChooser);
         // instantiate the command used for the autonomous period
     }
 	
