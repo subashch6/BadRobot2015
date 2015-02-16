@@ -13,18 +13,16 @@ public class DriveStraightForward extends CommandBase {
 	public DriveStraightForward(double driveTime, double speed)
 	{
 		requires((Subsystem) driveTrain);
-		requires((Subsystem) mxp);
 		this.driveTime = driveTime;
 		this.speed = speed;
-		mxp.resetGyro();// makes start angle zero
-		startTime = Utility.getFPGATime();
-		passedTime = 0;
 	}
 	
 	@Override
 	protected void initialize() {
 		driveTrain.tankDrive(0, 0);
-		
+		driveTrain.resetGyro();// makes start angle zero
+		startTime = Utility.getFPGATime();
+		passedTime = 0;		
 	}
 
 	@Override
@@ -35,7 +33,7 @@ public class DriveStraightForward extends CommandBase {
 	@Override
 	protected void execute() {
 		passedTime = Utility.getFPGATime() - startTime;
-		driveTrain.mecanumDriveCartesian(0, -speed, deadzone(rotation()), 0.0);
+		driveTrain.mecanumDrive(0, -speed, deadzone(rotation()));
 	}
 
 	@Override
@@ -72,7 +70,7 @@ public class DriveStraightForward extends CommandBase {
 	
 	public static double rotation()
 	{
-		return -(mxp.getAngle()/45);
+		return -(driveTrain.getAngle()/45);
 	}
 	
     public static double deadzone(double d) {

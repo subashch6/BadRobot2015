@@ -1,59 +1,50 @@
 package org.usfirst.frc.team1014.robot.commands.autonomous;
+
 import org.usfirst.frc.team1014.robot.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * This is the turning command for autonomous.
- * 
- * @author Manu S.
- *
- */
-public class AutoTurn extends CommandBase {
+public class AutoStrafe extends CommandBase {
 
-	public double degree;
-	public double difference;	
-	
+	public double driveTime, speed;
 	public double startTime, passedTime;
 	
-	public AutoTurn(double degree)
+	public AutoStrafe(double driveTime, double speed)
 	{
 		requires((Subsystem) driveTrain);
-		this.degree = degree;
+		this.driveTime = driveTime;
+		this.speed = speed;
 	}
 	
 	@Override
 	protected void initialize() {
 		driveTrain.tankDrive(0, 0);
-		this.difference = 0;
-		this.passedTime = 0;
-		this.startTime = Utility.getFPGATime();
-		driveTrain.resetGyro();		
+		driveTrain.resetGyro();// makes start angle zero
+		startTime = Utility.getFPGATime();
+		passedTime = 0;		
 	}
 
 	@Override
 	public String getConsoleIdentity() {
-		return "AutoTurn";
+		return "AutoStrafe";
 	}
 
 	@Override
 	protected void execute() {
 		passedTime = Utility.getFPGATime() - startTime;
-		difference = driveTrain.getAngle() - degree;// negative for counterclockwise
-		driveTrain.mecanumDrive(0, 0, deadzone(rotation()));
-		
+		driveTrain.mecanumDrive(speed, 0, deadzone(rotation()));
 	}
 
 	@Override
 	protected boolean isFinished() {
-		if(deadzone(difference) == 0 || passedTime/1000000 > 2)
+		if((passedTime / 1000000) > driveTime)
 		{
-			System.out.println("AutoTurnFinished");
+			System.out.println("AutoStrafe is done");
 			return true;
 		}
-
-		return false;
+		else
+			return false;
 	}
 
 	@Override
@@ -64,14 +55,23 @@ public class AutoTurn extends CommandBase {
 
 	@Override
 	protected void interrupted() {
-		System.out.println("AutoTurn interuppted");
 		
 	}
 	
-	public double rotation()
+	/**
+	 * This method returns an adjusted value to give the motors to keep the robot straight
+	 * For days
+	 * 
+	 * Assumes you are using it with tankDrive with positive angleDifference
+	 * returns 2 for zero degree turn and 0 for straight driving
+	 * 
+	 * @return
+	 */
+	public static double rotation()
 	{
-		return -(difference/60);
+		return -(driveTrain.getAngle()/45);
 	}
+	
     public static double deadzone(double d) {
         //whenever the controller moves LESS than the magic number, the 
         //joystick is in the loose position so return zero - as if the 

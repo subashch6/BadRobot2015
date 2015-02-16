@@ -7,7 +7,8 @@ public class MikeDriveGroup extends CommandGroup {
 
 	public MikeDriveGroup()
 	{
-		this.addParallel(new SafeMecanumDriveField());
+		this.addParallel(new MecanumDrive());
 		this.addParallel(new Grab());
+		this.addParallel(new GrabBin());
 	}
 }

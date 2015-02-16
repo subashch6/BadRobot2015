@@ -24,7 +24,8 @@ public class Grab extends CommandBase {
 
 	@Override
 	protected void execute() {
-		grabber.lift(OI.xboxController.getRightStickY());
+		grabber.lift(-OI.secXboxController.getLeftStickY());
+		System.out.println(grabber.isRetro());
 		
 	}
 

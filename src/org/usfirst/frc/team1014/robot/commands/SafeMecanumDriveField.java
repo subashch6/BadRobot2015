@@ -11,13 +11,12 @@ public class SafeMecanumDriveField extends CommandBase {
 	public SafeMecanumDriveField()
 	{
 		requires((Subsystem) driveTrain);
-		requires((Subsystem) mxp);
 	}
 	@Override
 	protected void initialize() {
 		driveTrain.tankDrive(0, 0);
-		mxp.getMXP().zeroYaw();
-		driveTrain.setInitalGyro((double)mxp.getMXP().getPitch(), (double)mxp.getMXP().getRoll());
+		driveTrain.getMXP().zeroYaw();
+		driveTrain.setInitalGyro((double)driveTrain.getMXP().getPitch(), (double)driveTrain.getMXP().getRoll());
 	}
 
 	@Override
@@ -28,19 +27,19 @@ public class SafeMecanumDriveField extends CommandBase {
 	@Override
 	protected void execute() {
 		
-		if(OI.xboxController.isBButtonPressed())// this line works
+		if(OI.priXboxController.isBButtonPressed())// this line works
 		{
-			mxp.resetGyro();
+			driveTrain.resetGyro();
 		}
-		if(driveTrain.isSafeToDrive((double)mxp.getMXP().getPitch(), (double)mxp.getMXP().getRoll()))
+		if(driveTrain.isSafeToDrive((double)driveTrain.getMXP().getPitch(), (double)driveTrain.getMXP().getRoll()))
 		{
-			if(OI.xboxController.getPOV() == -1) // not using dpad
+			if(OI.priXboxController.getPOV() == -1) // not using dpad
 			{
-				driveTrain.mecanumDriveCartesian(OI.xboxController.getLeftStickX(), OI.xboxController.getLeftStickY(), OI.xboxController.getRightStickX(), mxp.getAngle()); // just do mecanum
+				driveTrain.mecanumDrive(OI.priXboxController.getLeftStickX(), OI.priXboxController.getLeftStickY(), OI.priXboxController.getRightStickX()); // just do mecanum
 			}
 			else // use dpad
 			{
-				driveTrain.lineUpWithField(OI.xboxController.getPOV(), mxp.getAngle());
+				driveTrain.rotateToAngle((double) OI.priXboxController.getPOV());
 			}
 
 		}		  
