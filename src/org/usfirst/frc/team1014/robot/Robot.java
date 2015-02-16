@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import org.usfirst.frc.team1014.robot.commands.CommandBase;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
     Command teleCommand;
     SendableChooser autoChooser;
+    NetworkTable table = NetworkTable.getTable("SmartDashboard");
 
     /**
      * This function is run when the robot is first started up and should be
