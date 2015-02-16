@@ -38,7 +38,8 @@ public class Robot extends IterativeRobot {
     	CommandBase.init();
     	SmartDashboard.putData(Scheduler.getInstance());
     	table.putNumber("power",.2);
-    	table.putNumber("straight", 1.0);
+    	table.putNumber("straight", .5);
+    	table.putBoolean("DriveForward", false);
     	//Dashboard.update(autoChooser);
         // instantiate the command used for the autonomous period
     }
@@ -49,7 +50,8 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	Scheduler.getInstance().add(new DriveStraightForward(table.getNumber("straight"), table.getNumber("power")));
+    	if(table.getBoolean("DriveForward"))
+    		Scheduler.getInstance().add(new DriveStraightForward(table.getNumber("straight"), table.getNumber("power")));
     }
 
     /**
