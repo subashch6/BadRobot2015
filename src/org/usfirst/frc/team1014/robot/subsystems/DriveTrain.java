@@ -49,7 +49,6 @@ public class DriveTrain extends BadSubsystem {
         backLeft = new Talon(RobotMap.backLeftController);
         frontRight = new Talon(RobotMap.frontRightController);
         backRight = new Talon(RobotMap.backRightController); 
-
     	train = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
     	lidarLeft = new LIDAR(I2C.Port.kMXP, 0x62); //lidarRight = new Lidar();
     	
@@ -382,6 +381,7 @@ public class DriveTrain extends BadSubsystem {
 	{
 		return ultra.getRangeInches();
 	}
+	
 	public void setAutoMode(boolean on)
 	{
 		ultra.setAutomaticMode(on);
@@ -398,6 +398,22 @@ public class DriveTrain extends BadSubsystem {
 	{
 		ultra.setDistanceUnits(units);
 	}
+	public SpeedController getFrontLeft() {
+		return frontLeft;
+	}
+
+	public SpeedController getBackLeft() {
+		return backLeft;
+	}
+
+	public SpeedController getFrontRight() {
+		return frontRight;
+	}
+
+	public SpeedController getBackRight() {
+		return backRight;
+	}
+	
 }
 
 

@@ -12,6 +12,7 @@ import org.usfirst.frc.team1014.robot.commands.MikeDriveGroup;
 import org.usfirst.frc.team1014.robot.commands.autonomous.AutoTurn;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveSquare;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
+import org.usfirst.frc.team1014.smartdashboard.Dashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		
     	CommandBase.init();
+    	Dashboard.setup(table);
         // instantiate the command used for the autonomous period
     }
 	
@@ -44,7 +46,8 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	Scheduler.getInstance().add(new DriveSquare(.5, .2, 90));
+    	//Scheduler.getInstance().add(new DriveSquare(.5, .2, 90));
+    	Dashboard.init(table);
     }
 
     /**
@@ -52,6 +55,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        Dashboard.update(table);
     }
 
     public void teleopInit() {
@@ -76,6 +80,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        Dashboard.update(table);
     }
     
     /**
