@@ -2,7 +2,6 @@ package org.usfirst.frc.team1014.robot.subsystems;
 
 import org.usfirst.frc.team1014.robot.RobotMap;
 import org.usfirst.frc.team1014.robot.commands.MecanumDrive;
-import org.usfirst.frc.team1014.robot.commands.SafeMecanumDriveField;
 import org.usfirst.frc.team1014.robot.sensors.LIDAR;
 import org.usfirst.frc.team1014.robot.subsystems.IMU.IMU;
 
@@ -68,7 +67,7 @@ public class DriveTrain extends BadSubsystem {
 		resetGyro();
 		setInitalGyro(mxp.getPitch(), mxp.getRoll());
 		
-		ultra = new Ultrasonic(1,0);
+		ultra = new Ultrasonic(RobotMap.ultraPing, RobotMap.ultraEcho);
 	}
 
 	@Override
@@ -291,7 +290,7 @@ public class DriveTrain extends BadSubsystem {
     {
     	double rollAmount = startRoll - roll;
     	double pitchAmount = startPitch - pitch;
-    	System.out.println("Isn't safe to drive");
+    	//System.out.println("Isn't safe to drive");
     	
     	if(Math.abs(rollAmount) > 6)
     	{
