@@ -3,6 +3,7 @@ package org.usfirst.frc.team1014.smartdashboard;
 import org.usfirst.frc.team1014.robot.commands.autonomous.DriveSquare;
 import org.usfirst.frc.team1014.robot.commands.autonomous.Turn180;
 import org.usfirst.frc.team1014.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1014.robot.subsystems.Grabber;
 
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -23,6 +24,8 @@ public class Dashboard
 		table.putNumber("frontRight", DriveTrain.getInstance().getFrontRight().get());
 		table.putNumber("backLeft", DriveTrain.getInstance().getBackLeft().get());
 		table.putNumber("backRight", DriveTrain.getInstance().getBackRight().get());
+		table.putNumber("grabberLevel", 0);
+		
 	}
 	/**
 	 * adds specified command group to the scheduler which is determined from the Smartdashboard inputs
@@ -46,7 +49,9 @@ public class Dashboard
 		table.putNumber("frontRight", DriveTrain.getInstance().getFrontRight().get());
 		table.putNumber("backLeft", DriveTrain.getInstance().getBackLeft().get());
 		table.putNumber("backRight", DriveTrain.getInstance().getBackRight().get());
+		table.putNumber("GrabberLevel", Grabber.getInstance(0).levelCount);
 	}
+	
 	
 }
 

@@ -16,12 +16,12 @@ public class Grabber extends BadSubsystem {
 	public int levelCount;
 	public static final int MAX_NUMBER_OF_LEVELS = 7;
 	
-	public static Grabber getInstance()
+	public static Grabber getInstance(int grabberLevel)
 	{
 		
-        if (instance == null)
+        if (instance == null) 
         {
-            instance = new Grabber(0);
+            instance = new Grabber(grabberLevel);
         }
         return instance;
 	}
