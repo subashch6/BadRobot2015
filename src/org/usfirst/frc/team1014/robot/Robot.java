@@ -1,14 +1,6 @@
 package org.usfirst.frc.team1014.robot;
 
-import java.io.File;
-
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-import org.usfirst.frc.team1014.logger.AllRobotData;
-import org.usfirst.frc.team1014.logger.DriveTrainData;
-import org.usfirst.frc.team1014.robot.commands.CommandBase;
-import org.usfirst.frc.team1014.robot.commands.MikeDriveGroup;
-import org.usfirst.frc.team1014.smartdashboard.Dashboard;
+import java.io.IOException;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +8,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
+
+import org.usfirst.frc.team1014.robot.commands.CommandBase;
+import org.usfirst.frc.team1014.robot.commands.DriveGroup;
+import org.usfirst.frc.team1014.robot.commands.autonomous.AutoTurn;
+import org.usfirst.frc.team1014.robot.commands.autonomous.DriveSquare;
+import org.usfirst.frc.team1014.robot.commands.autonomous.DriveStraightForward;
+import org.usfirst.frc.team1014.smartdashboard.Dashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,27 +24,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-//Axis Camera ip = 10.10.14.11, Username = root, Password = admin
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-	//Serializer writer = new Persister();
-	//File resultFile = new File("AllRobotData.xml");
-	//public static DriveTrainData driveTrainData;
-	//public static AllRobotData allRobotData;
+
     Command teleCommand;
     SendableChooser autoChooser;
     NetworkTable table = NetworkTable.getTable("SmartDashboard");
-
+	public static AxisCamera camera = new AxisCamera("10.10.14.11");
     /**
      * This function is run when the robot is first started up and should be
       * used for any initialization code.
      */
     public void robotInit() {
-		
+    	
     	Dashboard.setup(table);
+    	while(!table.getBoolean("grabberLevelSet"))
+    	{
+    		
+    	}
     	CommandBase.init(table);
-    	//allRobotData = new AllRobotData(driveTrainData);
         // instantiate the command used for the autonomous period
     }
 	
@@ -54,7 +53,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	//Scheduler.getInstance().add(new DriveSquare(.5, .2, 90));
+    	Dashboard.parameterSetup(table);
     	Dashboard.init(table);
     }
 
@@ -72,7 +71,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
 
-        Scheduler.getInstance().add(new MikeDriveGroup());
+        Scheduler.getInstance().add(new DriveGroup());
     }
 
     /**
@@ -88,16 +87,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        /*driveTrainData.update(CommandBase.driveTrain.getFrontLeft().get(), CommandBase.driveTrain.getFrontRight().get(),
-    			CommandBase.driveTrain.getBackLeft().get(), CommandBase.driveTrain.getBackRight().get());
-        allRobotData.update(driveTrainData);
-        try {
-			writer.write(allRobotData, resultFile);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/ 
-        Dashboard.update(table);
     }
     
     /**

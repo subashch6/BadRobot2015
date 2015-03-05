@@ -1,18 +1,9 @@
 package org.usfirst.frc.team1014.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-
-
-
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 
-
-
-
-import org.usfirst.frc.team1014.logger.DriveTrainData;
-//import MikeDriveTrain;
 import org.usfirst.frc.team1014.robot.OI;
 import org.usfirst.frc.team1014.robot.Robot;
 import org.usfirst.frc.team1014.robot.RobotMap;
@@ -28,16 +19,19 @@ public abstract class CommandBase extends Command {
     public static Grabber grabber;
     public static WinchLift winchLift;
     public static PancakeArm pancake;
+	public static AxisCamera camera;
     
     public static void init(NetworkTable table) {
         //Final Subsystems
     	
     	driveTrain = DriveTrain.getInstance();
-    	grabber = Grabber.getInstance((int) table.getNumber("grabberLevel", 0));
+    	grabber = Grabber.getInstance();
     	winchLift = WinchLift.getInstance();
     	pancake = PancakeArm.getInstance();
+    	grabber.setLevelCount((int) table.getNumber("grabberLevel"));
+    	camera = new AxisCamera("10.10.14.11");
     	//Robot.driveTrainData = new DriveTrainData(driveTrain.getFrontLeft().get(), driveTrain.getFrontRight().get(),
-    			driveTrain.getBackLeft().get(), driveTrain.getBackRight().get());
+    			//driveTrain.getBackLeft().get(), driveTrain.getBackRight().get());
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
